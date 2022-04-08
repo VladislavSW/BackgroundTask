@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Scandiweb_BackgroundTask
+ *
+ * @category Scandiweb
+ * @package  Scandiweb_BackgroundTask
+ * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="styles"/>
+    <head>
+        <css src="Scandiweb_BackgroundTask::css/style.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+            <uiComponent name="scandiweb_backgroundtask_task_listing"/>
+        </referenceContainer>
+    </body>
+</page>

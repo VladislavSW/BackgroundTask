@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Scandiweb_BackgroundTask
+ *
+ * @category Scandiweb
+ * @package  Scandiweb_BackgroundTask
+ * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route method="POST" url="/V1/background-task/save">
+        <service class="Scandiweb\BackgroundTask\Api\BackgroundTaskRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Scandiweb_BackgroundTask::api_save_task"/>
+        </resources>
+    </route>
+</routes>

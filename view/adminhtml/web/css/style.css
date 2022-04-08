@@ -1,0 +1,55 @@
+/**
+ * Scandiweb_BackgroundTask
+ *
+ * @category Scandiweb
+ * @package  Scandiweb_BackgroundTask
+ * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
+ */
+
+.Status--pending {
+    background: #FFB347 none repeat scroll 0 0;
+    border: 1px solid #eb5202;
+    color: #eb5202;
+    display: block;
+    font-weight: bold;
+    line-height: 17px;
+    padding: 0 3px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.Status--running {
+    background: #E5F7FE none repeat scroll 0 0;
+    border: 1px solid #006bb4;
+    color: #006bb4;
+    display: block;
+    font-weight: bold;
+    line-height: 17px;
+    padding: 0 3px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.Status--success {
+    background: #d0e5a9 none repeat scroll 0 0;
+    border: 1px solid #5b8116;
+    color: #185b00;
+    display: block;
+    font-weight: bold;
+    line-height: 17px;
+    padding: 0 3px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.Status--error {
+    background: #f9d4d4 none repeat scroll 0 0;
+    border: 1px solid #e22626;
+    color: #e22626;
+    display: block;
+    font-weight: bold;
+    line-height: 17px;
+    padding: 0 3px;
+    text-align: center;
+    text-transform: uppercase;
+}

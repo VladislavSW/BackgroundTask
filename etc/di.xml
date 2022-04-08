@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Scandiweb_BackgroundTask
+ *
+ * @category Scandiweb
+ * @package  Scandiweb_BackgroundTask
+ * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Logger -->
+    <virtualType name="ScandiwebBackgroundTaskLogger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="error" xsi:type="object">Scandiweb\BackgroundTask\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Scandiweb\BackgroundTask\Cron\BackgroundTaskRunner">
+        <arguments>
+            <argument name="logger" xsi:type="object">ScandiwebBackgroundTaskLogger</argument>
+        </arguments>
+    </type>
+
+    <!-- Preferences -->
+    <preference for="Scandiweb\BackgroundTask\Api\BackgroundTaskRepositoryInterface"
+                type="Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepository"/>
+    <preference for="Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface"
+                type="Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTaskSearchResults"/>
+
+    <!-- UI -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="scandiweb_backgroundtask_task_listing_data_source" xsi:type="string">BackgroundTaskCollection</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="BackgroundTaskCollection" type="Scandiweb\BackgroundTask\Ui\DataProvider\Task\Listing\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">scandiweb_background_task</argument>
+            <argument name="resourceModel" xsi:type="string">Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask</argument>
+        </arguments>
+    </virtualType>
+</config>

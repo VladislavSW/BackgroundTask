@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Scandiweb_BackgroundTask
+ *
+ * @category Scandiweb
+ * @package  Scandiweb_BackgroundTask
+ * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add
+            id="Scandiweb_BackgroundTask::tasks"
+            title="Background Tasks"
+            translate="title"
+            module="Scandiweb_BackgroundTask"
+            sortOrder="200"
+            parent="Magento_Backend::system"
+            resource="Scandiweb_BackgroundTask::tasks"
+        />
+        <add
+            id="Scandiweb_BackgroundTask::tasks_view"
+            title="View Tasks"
+            module="Scandiweb_BackgroundTask"
+            sortOrder="10"
+            resource="Scandiweb_BackgroundTask::tasks_view"
+            action="scandiweb_backgroundtask/tasks/view"
+            parent="Scandiweb_BackgroundTask::tasks"
+        />
+    </menu>
+</config>

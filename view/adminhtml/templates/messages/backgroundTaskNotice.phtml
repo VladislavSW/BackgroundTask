@@ -1,0 +1,20 @@
+<?php
+/**
+ * Scandiweb_BackgroundTask
+ *
+ * @category Scandiweb
+ * @package  Scandiweb_BackgroundTask
+ * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
+ */
+
+/* @var $block Magento\Framework\View\Element\Message\Renderer\BlockRenderer\Template */
+
+$backgroundTaskListUrl = $block->escapeUrl($block->getData('background_task_list_url'));
+$additionalMessage = $block->escapeHtml($block->getData('additional_message'));
+$additionalMessage = $additionalMessage ? $additionalMessage . '<br/>' : $additionalMessage;
+$message = __(
+    $additionalMessage
+    . "Selected task will run in a background. See the background task list <a href='{$backgroundTaskListUrl}'>here</a>."
+);
+?>
+<?= $message ?>
