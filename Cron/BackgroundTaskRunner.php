@@ -83,7 +83,7 @@ class BackgroundTaskRunner
                     $this->error($task);
                 }
             } catch (Exception $e) {
-                $task->setMessage($e->getMessage());
+                $task->addMessage($e->getMessage());
                 $this->error($task);
             }
         }
@@ -103,17 +103,17 @@ class BackgroundTaskRunner
             $instanceClass = BackgroundTaskHandlerInterface::class;
             $handlerClass = get_class($handler);
 
-            $task->setMessage("Job handler {$handlerClass} must be an instance of {$instanceClass}");
+            $task->addMessage("Job handler {$handlerClass} must be an instance of {$instanceClass}");
             $this->error($task);
         } else {
             $task->setStatus(BackgroundTaskInterface::STATUS_RUNNING)
-                ->setExecutedAt(strftime(
-                    '%Y-%m-%d %H:%M:%S',
+                ->setExecutedAt(date(
+                    'Y-m-d H:i:s',
                     $this->dateTime->gmtTimestamp()
                 ));
 
             $this->saveTask($task);
-            $handler->execute($task);
+            $handler->runTask($task);
             $this->success($task);
         }
     }
@@ -129,8 +129,8 @@ class BackgroundTaskRunner
         $this->logger->error($task->getMessage());
 
         $task->setStatus(BackgroundTaskInterface::STATUS_ERROR)
-            ->setFinishedAt(strftime(
-                '%Y-%m-%d %H:%M:%S',
+            ->setFinishedAt(date(
+                'Y-m-d H:i:s',
                 $this->dateTime->gmtTimestamp()
             ));
 
@@ -146,8 +146,8 @@ class BackgroundTaskRunner
     private function success(BackgroundTaskInterface $task): void
     {
         $task->setStatus(BackgroundTaskInterface::STATUS_SUCCESS)
-            ->setFinishedAt(strftime(
-                '%Y-%m-%d %H:%M:%S',
+            ->setFinishedAt(date(
+                'Y-m-d H:i:s',
                 $this->dateTime->gmtTimestamp()
             ));
 

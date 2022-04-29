@@ -38,6 +38,22 @@ interface BackgroundTaskInterface
     public function setId(int $id);
 
     /**
+     * Task name getter
+     *
+     * @return string
+     */
+    public function getName(): string;
+
+    /**
+     * Task name setter
+     *
+     * @param string $name
+     *
+     * @return $this
+     */
+    public function setName(string $name): BackgroundTaskInterface;
+
+    /**
      * Task handler getter
      *
      * @return string
@@ -86,20 +102,27 @@ interface BackgroundTaskInterface
     public function setStatus(?string $status): BackgroundTaskInterface;
 
     /**
+     * @param string $message
+     *
+     * @return BackgroundTaskInterface
+     */
+    public function addMessage(string $message): BackgroundTaskInterface;
+
+    /**
      * Task execution message getter
      *
      * @return string|null
      */
-    public function getMessage(): ?string;
+    public function getMessages(): ?string;
 
     /**
      * Task execution message setter
      *
-     * @param string|null $message
+     * @param string[]|null $messages
      *
      * @return BackgroundTaskInterface
      */
-    public function setMessage(?string $message): BackgroundTaskInterface;
+    public function setMessages(?array $messages): BackgroundTaskInterface;
 
     /**
      * Task creation date getter
@@ -148,4 +171,20 @@ interface BackgroundTaskInterface
      * @return BackgroundTaskInterface
      */
     public function setFinishedAt(?string $finishedAt): BackgroundTaskInterface;
+
+    /**
+     * Action link getter
+     *
+     * @return BackgroundTaskActionLinkInterface
+     */
+    public function getActionLink(): BackgroundTaskActionLinkInterface;
+
+    /**
+     * Action link setter
+     *
+     * @param BackgroundTaskActionLinkInterface|null $actionLink
+     *
+     * @return BackgroundTaskInterface
+     */
+    public function setActionLink(?BackgroundTaskActionLinkInterface $actionLink): BackgroundTaskInterface;
 }

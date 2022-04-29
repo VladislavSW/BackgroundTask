@@ -52,4 +52,13 @@ interface BackgroundTaskRepositoryInterface
      * @return BackgroundTaskSearchResultsInterface
      */
     public function getListByStatus(string $status): BackgroundTaskSearchResultsInterface;
+
+    /**
+     * Get task by id
+     *
+     * @param int $id
+     *
+     * @return BackgroundTaskInterface
+     */
+    public function getById(int $id): BackgroundTaskInterface;
 }

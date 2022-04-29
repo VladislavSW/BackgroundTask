@@ -60,11 +60,12 @@ class MessageManager extends Manager
     }
 
     /**
+     * @param mixed $taskId
      * @param string $additionalMessage
      *
      * @return void
      */
-    public function addBackgroundTaskNotice(string $additionalMessage = ''): void
+    public function addBackgroundTaskNotice($taskId, string $additionalMessage = ''): void
     {
         $backgroundTaskListUrl = $this->urlInterface->getUrl(
             'scandiweb_backgroundtask/tasks/view',
@@ -72,6 +73,7 @@ class MessageManager extends Manager
         );
 
         $this->addComplexNoticeMessage('backgroundTaskNotice', [
+            'task_id' => $taskId,
             'background_task_list_url' => $backgroundTaskListUrl,
             'additional_message' => $additionalMessage
         ]);

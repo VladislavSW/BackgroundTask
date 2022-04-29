@@ -1,0 +1,18 @@
+<!--
+/**
+ * Scandiweb_BackgroundTask
+ *
+ * @category Scandiweb
+ * @package  Scandiweb_BackgroundTask
+ * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
+ */
+-->
+
+<div class="data-grid-cell-content">
+    <!-- ko if: $col.isLinkAvailable($row()) -->
+        <a data-bind="attr: {
+            href: $col.getActionUrl($row()),
+            target: $col.getTarget($row())
+        }, text: $col.getActionText($row())"></a>
+    <!-- /ko -->
+</div>

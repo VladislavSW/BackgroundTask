@@ -13,14 +13,16 @@
     <table name="scandiweb_background_task" resource="default" engine="innodb" comment="Background Tasks">
         <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true"
                 comment="Id"/>
+        <column xsi:type="varchar" name="name" nullable="false" length="255" comment="Task Name"/>
         <column xsi:type="text" name="handler" nullable="false" comment="Task Handler"/>
         <column xsi:type="text" name="args" nullable="false" comment="Handler Arguments"/>
         <column xsi:type="varchar" name="status" nullable="false" length="7" default="pending" comment="Status"/>
-        <column xsi:type="text" name="message" nullable="true" comment="Message"/>
+        <column xsi:type="text" name="messages" nullable="true" comment="Message"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Created At"/>
         <column xsi:type="timestamp" name="executed_at" on_update="false" nullable="true" comment="Executed At"/>
         <column xsi:type="timestamp" name="finished_at" on_update="false" nullable="true" comment="Finished At"/>
+        <column xsi:type="text" name="action_link" nullable="true" comment="Action Link"/>
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="id"/>
         </constraint>

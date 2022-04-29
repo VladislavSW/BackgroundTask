@@ -59,7 +59,7 @@ class BackgroundTaskCleaner
     public function execute(): void
     {
         $timeOffset = 3600 * 24 * self::THRESHOLD;
-        $cleanFromDate = strftime('%Y-%m-%d %H:%M:%S', $this->dateTime->gmtTimestamp() - $timeOffset);
+        $cleanFromDate = date('Y-m-d H:i:s', $this->dateTime->gmtTimestamp() - $timeOffset);
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('created_at', $cleanFromDate, 'lteq')
             ->create();

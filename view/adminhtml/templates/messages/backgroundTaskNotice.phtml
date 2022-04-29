@@ -9,12 +9,14 @@
 
 /* @var $block Magento\Framework\View\Element\Message\Renderer\BlockRenderer\Template */
 
+$taskId = $block->escapeUrl($block->getData('task_id'));
 $backgroundTaskListUrl = $block->escapeUrl($block->getData('background_task_list_url'));
 $additionalMessage = $block->escapeHtml($block->getData('additional_message'));
 $additionalMessage = $additionalMessage ? $additionalMessage . '<br/>' : $additionalMessage;
 $message = __(
     $additionalMessage
-    . "Selected task will run in a background. See the background task list <a href='{$backgroundTaskListUrl}'>here</a>."
+    . "The selected task will run in the background with the <strong>ID {$taskId}</strong>.
+    <br/>See the background task list <a href='{$backgroundTaskListUrl}'>here</a>."
 );
 ?>
 <?= $message ?>

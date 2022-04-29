@@ -59,15 +59,11 @@
     </listingToolbar>
     <columns name="scandiweb_backgroundtask_task_columns">
         <column name="id">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="sorting" xsi:type="string">asc</item>
-                </item>
-            </argument>
             <settings>
                 <filter>textRange</filter>
                 <label translate="true">ID</label>
                 <resizeDefaultWidth>25</resizeDefaultWidth>
+                <sorting>desc</sorting>
             </settings>
         </column>
         <column name="status" component="Scandiweb_BackgroundTask/js/grid/columns/status">
@@ -76,18 +72,18 @@
                 <label translate="true">Status</label>
             </settings>
         </column>
-        <column name="handler">
+        <column name="name">
             <settings>
                 <filter>text</filter>
                 <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-                <label translate="true">Handler</label>
+                <label translate="true">Name</label>
             </settings>
         </column>
-        <column name="message">
+        <column name="messages">
             <settings>
                 <filter>text</filter>
                 <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-                <label translate="true">Message</label>
+                <label translate="true">Messages</label>
             </settings>
         </column>
         <column name="created_at"
@@ -117,11 +113,12 @@
                 <label translate="true">Finished</label>
             </settings>
         </column>
-        <column name="args">
+        <column name="action_link"
+                class="Scandiweb\BackgroundTask\Ui\Component\Listing\Columns\ActionLink"
+                component="Scandiweb_BackgroundTask/js/grid/columns/action_link">
             <settings>
                 <filter>text</filter>
-                <bodyTmpl>ui/grid/cells/text</bodyTmpl>
-                <label translate="true">Arguments</label>
+                <label translate="true">Action Link</label>
             </settings>
         </column>
     </columns>

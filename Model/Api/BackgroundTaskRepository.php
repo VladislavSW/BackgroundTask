@@ -88,18 +88,18 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
      */
     public function save(BackgroundTaskInterface $task): void
     {
-        $backgroundTask = $this->backgroundTaskFactory->create();
-
-        $backgroundTask->setId($task->getId())
+        $task->setId($task->getId())
+            ->setName($task->getName())
             ->setHandler($task->getHandler())
             ->setArgs($task->getArgs())
             ->setStatus($task->getStatus())
-            ->setMessage($task->getMessage())
+            ->setMessages([$task->getMessages()])
             ->setCreatedAt($task->getCreatedAt())
             ->setExecutedAt($task->getExecutedAt())
-            ->setFinishedAt($task->getFinishedAt());
+            ->setFinishedAt($task->getFinishedAt())
+            ->setActionLink($task->getActionLink());
 
-        $this->backgroundTaskResource->save($backgroundTask);
+        $this->backgroundTaskResource->save($task);
     }
 
     /**
@@ -110,10 +110,8 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
      */
     public function delete(BackgroundTaskInterface $task): void
     {
-        $backgroundTask = $this->backgroundTaskFactory->create();
-        $backgroundTask->setId($task->getId());
-
-        $this->backgroundTaskResource->delete($backgroundTask);
+        $task->setId($task->getId());
+        $this->backgroundTaskResource->delete($task);
     }
 
     /**
@@ -152,5 +150,19 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
         $searchResults->setItems($collection->getItems());
 
         return $searchResults;
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return BackgroundTaskInterface
+     */
+    public function getById(int $id): BackgroundTaskInterface
+    {
+        $task = $this->backgroundTaskFactory->create();
+
+        $this->backgroundTaskResource->load($task, $id, 'id');
+
+        return $task;
     }
 }

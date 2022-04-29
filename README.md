@@ -13,9 +13,9 @@ The execution errors will be logged in `project_root/var/log/scandiweb/backgroun
 
 An example of a pending task from the `scandiweb_background_task` table:
 
-| id  | handler                                                      | args       |status  | message | created_at          | executed_at | finished_at |
-|-----|--------------------------------------------------------------|------------|--------|---------|---------------------|-------------|-------------|
-| 1   | Scandiweb\Sales\Model\BackgroundTask\SetMassShippedHandler   | ["357028"] |pending | [NULL]  | 2022-04-05 14:11:31 | [NULL]      | [NULL]      |
+| id  | name                     | handler                                                    | args        | status  | messages | created_at          | executed_at | finished_at  | action_link                                         |
+|-----|--------------------------|------------------------------------------------------------|-------------|---------|----------|---------------------|-------------|--------------|-----------------------------------------------------|
+| 1   | 50 - Shipping Email Sent | Scandiweb\Sales\Model\BackgroundTask\SetMassShippedHandler | ["357028"]  | pending | [NULL]   | 2022-04-05 14:11:31 | [NULL]      | [NULL]       | {"text":null,"route_path":null,"route_params":null} |
 
 All tasks can be viewed in the admin panel `Admin->Scandiweb->Background Tasks->View Tasks`.
 
@@ -26,8 +26,30 @@ All tasks can be viewed in the admin panel `Admin->Scandiweb->Background Tasks->
 from the `scandiweb_background_task` database table. The cron job logic will create an object from the `handler`
 value and will run the `execute` method passing the `task` as an argument. 
 
-The `handler` class must implement `Model/BackgroundTaskHandlerInterface`, otherwise, an exception
+The `handler` class must implement `Model\BackgroundTaskHandlerInterface`, otherwise, an exception
 will be thrown. 
+
+In case if an action link should be used to download some file for example, use `Api\Data\BackgroundTaskActionLinkInterface`
+to save the route data that will be used during link generation e.g.:
+```injectablephp
+$actionLink = $this->backgroundTaskActionLinkFactory
+    ->create()
+    ->setText('Download CSV')
+    ->setRoutePath('reports/report/download')
+    ->setRouteParams([
+        'file_name' => $fileName,
+        'file' => $csvFile['value'],
+        'task_id' => $backgroundTask->getId(),
+        'target' => '_self',
+        '_secure' => true
+    ]);
+
+$backgroundTask->setActionLink($actionLink);
+
+$this->backgroundTaskRepositoryFactory
+    ->create()
+    ->save($backgroundTask);
+```
 
 Running the task, the task status will be changed to `running`.
 
@@ -38,7 +60,7 @@ In error or exception cases the task `status` will be changed to `error`, and th
 
 In the success case, the task status will be changed to `success` and all messages set to the task will be saved.
 
-Use `BackgroundTask\Model\MessageManager::addBackgroundTaskNotice`
+Use `Model\MessageManager::addBackgroundTaskNotice`
 to notice that the selected task will run in the background.
 
 ## Task cleaner
@@ -86,7 +108,8 @@ public function massAction(AbstractCollection $collection)
         ...
         
         // Run in a background
-        $backgroundTask->setHandler(SetMassDeliveredHandler::class);
+        $backgroundTask->setName(SetMassDeliveredHandler::getTaskName())
+            ->setHandler(SetMassDeliveredHandler::class);
         $this->backgroundTaskRepositoryFactory
             ->create()
             ->save($backgroundTask);
@@ -96,13 +119,13 @@ public function massAction(AbstractCollection $collection)
         // Run within the same request
         $this->setMassDeliveredHandlerFactory
             ->create()
-            ->execute($backgroundTask);
+            ->runTask($backgroundTask);
     }
 
     ...
 }
 ```
-`Sporltand\Sales\Model\BackgroundTask\SetMassDeliveredHandler`
+`Scandiweb\Sales\Model\BackgroundTask\SetMassDeliveredHandler`
 ```injectablephp
 ...
 
@@ -138,12 +161,20 @@ class SetMassDeliveredHandler implements BackgroundTaskHandlerInterface
     }
 
     /**
+     * @return string
+     */
+    public static function getTaskName(): string
+    {
+        return '90 - Delivered | Update Status';
+    }
+
+    /**
      * @param BackgroundTaskInterface $backgroundTask
      *
      * @return void
      * @throws LocalizedException
      */
-    public function execute(BackgroundTaskInterface $backgroundTask): void
+    public function runTask(BackgroundTaskInterface $backgroundTask): void
     {
         $args = $backgroundTask->getArgs();
 
@@ -161,7 +192,7 @@ class SetMassDeliveredHandler implements BackgroundTaskHandlerInterface
 
         $successMsg = __('Order statuses updated for complete orders.');
         $this->messageManager->addSuccessMessage($successMsg);
-        $backgroundTask->setMessage($successMsg->__toString());
+        $backgroundTask->addMessage($successMsg->__toString());
     }
 }
 ```

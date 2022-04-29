@@ -16,11 +16,18 @@ use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 interface BackgroundTaskHandlerInterface
 {
     /**
+     * Task name getter
+     *
+     * @return string
+     */
+    public static function getTaskName(): string;
+
+    /**
      * Background task handler
      *
      * @param BackgroundTaskInterface $backgroundTask
      *
      * @return void
      */
-    public function execute(BackgroundTaskInterface $backgroundTask): void;
+    public function runTask(BackgroundTaskInterface $backgroundTask): void;
 }

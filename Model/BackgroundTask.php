@@ -12,15 +12,41 @@ declare(strict_types=1);
 namespace Scandiweb\BackgroundTask\Model;
 
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
+use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface;
+use Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTaskActionLinkFactory;
 use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask as BackgroundTaskResource;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Registry;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Model\ResourceModel\AbstractResource;
+use Magento\Framework\Data\Collection\AbstractDb;
 
 class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
 {
     /**
-     * @var string
+     * @var BackgroundTaskActionLinkFactory
      */
-    protected $message;
+    protected $backgroundTaskActionLinkFactory;
+
+    /**
+     * @param Context $context
+     * @param Registry $registry
+     * @param BackgroundTaskActionLinkFactory $backgroundTaskActionLinkFactory
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
+     * @param array $data
+     */
+    public function __construct(
+        Context $context,
+        Registry $registry,
+        BackgroundTaskActionLinkFactory $backgroundTaskActionLinkFactory,
+        AbstractResource $resource = null,
+        AbstractDb $resourceCollection = null,
+        array $data = []
+    ) {
+        parent::__construct($context, $registry, $resource, $resourceCollection, $data);
+        $this->backgroundTaskActionLinkFactory = $backgroundTaskActionLinkFactory;
+    }
 
     /**
      * @return void
@@ -28,6 +54,26 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     protected function _construct()
     {
         $this->_init(BackgroundTaskResource::class);
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->getData('name');
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return BackgroundTaskInterface
+     */
+    public function setName(string $name): BackgroundTaskInterface
+    {
+        $this->setData('name', $name);
+
+        return $this;
     }
 
     /**
@@ -55,7 +101,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
      */
     public function getArgs()
     {
-        $args = $this->getData('args');
+        $args = $this->getData('args') ?? '';
         $result = json_decode($args, true);
 
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -108,30 +154,41 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string|null
-     */
-    public function getMessage(): ?string
-    {
-        return $this->getData('message');
-    }
-
-    /**
-     * @param string|null $message
+     * @param string $message
      *
      * @return BackgroundTaskInterface
      */
-    public function setMessage(?string $message): BackgroundTaskInterface
+    public function addMessage(string $message): BackgroundTaskInterface
     {
-        if (!$message) {
-            $this->unsetData('message');
-            $this->message = $message;
-        } elseif ($this->message) {
-            $this->message .= ' | ' . $message;
+        if ($this->getMessages()) {
+            $this->setMessages([$this->getMessages(), $message]);
         } else {
-            $this->message = $message;
+            $this->setMessages([$message]);
         }
 
-        $this->setData('message', $this->message);
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getMessages(): ?string
+    {
+        return $this->getData('messages');
+    }
+
+    /**
+     * @param string[]|null $messages
+     *
+     * @return BackgroundTaskInterface
+     */
+    public function setMessages(?array $messages): BackgroundTaskInterface
+    {
+        if ($messages === null) {
+            $this->unsetData('messages');
+        } else {
+            $this->setData('messages', implode(' | ', $messages));
+        }
 
         return $this;
     }
@@ -192,6 +249,49 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     public function setFinishedAt(?string $finishedAt): BackgroundTaskInterface
     {
         $this->setData('finished_at', $finishedAt);
+
+        return $this;
+    }
+
+    /**
+     * @return BackgroundTaskActionLinkInterface
+     */
+    public function getActionLink(): BackgroundTaskActionLinkInterface
+    {
+        $actionLinkData = $this->getData('action_link');
+
+        if ($actionLinkData === null) {
+            $actionLinkData = [
+                'text' => null,
+                'route_path' => null,
+                'route_params' => null
+            ];
+        } elseif (is_string($actionLinkData)) {
+            $actionLinkData = json_decode($actionLinkData, true);
+        }
+
+        $actionLink = $this->backgroundTaskActionLinkFactory->create();
+        $actionLink->setText($actionLinkData['text'])
+            ->setRoutePath($actionLinkData['route_path'])
+            ->setRouteParams($actionLinkData['route_params']);
+
+        return $actionLink;
+    }
+
+    /**
+     * @param BackgroundTaskActionLinkInterface|null $actionLink
+     *
+     * @return BackgroundTaskInterface
+     */
+    public function setActionLink(?BackgroundTaskActionLinkInterface $actionLink): BackgroundTaskInterface
+    {
+        $actionLink = $actionLink ?? $this->backgroundTaskActionLinkFactory->create();
+
+        $this->setData('action_link', json_encode([
+            'text' => $actionLink->getText(),
+            'route_path' => $actionLink->getRoutePath(),
+            'route_params' => $actionLink->getRouteParams()
+        ]));
 
         return $this;
     }
