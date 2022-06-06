@@ -9,7 +9,7 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
     <menu>
         <add
             id="Scandiweb_BackgroundTask::tasks"
@@ -17,7 +17,7 @@
             translate="title"
             module="Scandiweb_BackgroundTask"
             sortOrder="100"
-            parent="Scandiweb_Core::scandiweb"
+            parent="Magento_Backend::system"
             resource="Scandiweb_BackgroundTask::tasks"
         />
         <add

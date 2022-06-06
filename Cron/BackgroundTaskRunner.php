@@ -113,10 +113,7 @@ class BackgroundTaskRunner
             $this->error($task);
         } else {
             $task->setStatus(BackgroundTaskInterface::STATUS_RUNNING)
-                ->setExecutedAt(date(
-                    'Y-m-d H:i:s',
-                    $this->dateTime->gmtTimestamp()
-                ));
+                ->setExecutedAt($this->getCurrentDateTime());
 
             $this->saveTask($task);
             $handler->runTask($task);
@@ -137,10 +134,7 @@ class BackgroundTaskRunner
         $this->logger->error($task->getMessage());
 
         $task->setStatus(BackgroundTaskInterface::STATUS_ERROR)
-            ->setFinishedAt(date(
-                'Y-m-d H:i:s',
-                $this->dateTime->gmtTimestamp()
-            ));
+            ->setFinishedAt($this->getCurrentDateTime());
 
         $this->saveTask($task);
     }
@@ -156,10 +150,7 @@ class BackgroundTaskRunner
     private function success(BackgroundTaskInterface $task): void
     {
         $task->setStatus(BackgroundTaskInterface::STATUS_SUCCESS)
-            ->setFinishedAt(date(
-                'Y-m-d H:i:s',
-                $this->dateTime->gmtTimestamp()
-            ));
+            ->setFinishedAt($this->getCurrentDateTime());
 
         $this->saveTask($task);
     }
@@ -176,5 +167,18 @@ class BackgroundTaskRunner
     {
         $backgroundTaskRepository = $this->backgroundTaskRepositoryFactory->create();
         $backgroundTaskRepository->save($task);
+    }
+
+    /**
+     * Get current date time
+     *
+     * @return string
+     */
+    private function getCurrentDateTime(): string
+    {
+        return date(
+            'Y-m-d H:i:s',
+            $this->dateTime->gmtTimestamp()
+        );
     }
 }

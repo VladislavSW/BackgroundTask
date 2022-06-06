@@ -12,7 +12,9 @@ declare(strict_types=1);
 namespace Scandiweb\BackgroundTask\Cron;
 
 use Exception;
+use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
 
@@ -24,9 +26,9 @@ use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
 class BackgroundTaskCleaner
 {
     /**
-     * Cleaning threshold in days
+     * Cleaning frequency XML configuration path
      */
-    private const THRESHOLD = 30;
+    private const CLEANER_FREQUENCY_CONFIG_PATH = 'background_task/cleaner/frequency';
 
     /**
      * @var BackgroundTaskRepositoryFactory
@@ -44,18 +46,26 @@ class BackgroundTaskCleaner
     protected $dateTime;
 
     /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * @param BackgroundTaskRepositoryFactory $backgroundTaskRepositoryFactory
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param DateTime $dateTime
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         BackgroundTaskRepositoryFactory $backgroundTaskRepositoryFactory,
         SearchCriteriaBuilder $searchCriteriaBuilder,
-        DateTime $dateTime
+        DateTime $dateTime,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->backgroundTaskRepositoryFactory = $backgroundTaskRepositoryFactory;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->dateTime = $dateTime;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -66,8 +76,8 @@ class BackgroundTaskCleaner
      */
     public function execute(): void
     {
-        $timeOffset = 3600 * 24 * self::THRESHOLD;
-        $cleanFromDate = date('Y-m-d H:i:s', $this->dateTime->gmtTimestamp() - $timeOffset);
+        $frequencyInSeconds = $this->getCleaningFrequency();
+        $cleanFromDate = date('Y-m-d H:i:s', $this->dateTime->gmtTimestamp() - $frequencyInSeconds);
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('created_at', $cleanFromDate, 'lteq')
             ->create();
@@ -77,5 +87,20 @@ class BackgroundTaskCleaner
         foreach ($tasks as $task) {
             $backgroundTaskRepository->delete($task);
         }
+    }
+
+    /**
+     * Get task cleaning frequency in seconds
+     *
+     * @return int
+     */
+    private function getCleaningFrequency(): int
+    {
+        $frequencyInDays = $this->scopeConfig->getValue(
+            self::CLEANER_FREQUENCY_CONFIG_PATH,
+            ScopeInterface::SCOPE_STORE
+        );
+
+        return 3600 * 24 * (int)$frequencyInDays;
     }
 }
