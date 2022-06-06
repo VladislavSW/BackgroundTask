@@ -16,6 +16,9 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\Page;
 use Magento\Framework\View\Result\PageFactory;
 
+/**
+ * Background tasks view action class
+ */
 class View extends Action
 {
     /**

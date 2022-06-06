@@ -20,6 +20,10 @@ use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 use Scandiweb\BackgroundTask\Model\BackgroundTaskHandlerInterface;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
 
+/**
+ * Background task runner class.
+ * Handles pending tasks.
+ */
 class BackgroundTaskRunner
 {
     /**
@@ -61,7 +65,7 @@ class BackgroundTaskRunner
     }
 
     /**
-     * Run tasks
+     * Task runner
      *
      * @return void
      * @throws Exception
@@ -90,6 +94,8 @@ class BackgroundTaskRunner
     }
 
     /**
+     * Run task
+     *
      * @param BackgroundTaskInterface $task
      *
      * @return void
@@ -119,6 +125,8 @@ class BackgroundTaskRunner
     }
 
     /**
+     * Error task handler
+     *
      * @param BackgroundTaskInterface $task
      *
      * @return void
@@ -138,6 +146,8 @@ class BackgroundTaskRunner
     }
 
     /**
+     * Success task handler
+     *
      * @param BackgroundTaskInterface $task
      *
      * @return void
@@ -155,6 +165,8 @@ class BackgroundTaskRunner
     }
 
     /**
+     * Save task
+     *
      * @param BackgroundTaskInterface $task
      *
      * @return void

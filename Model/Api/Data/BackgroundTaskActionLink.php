@@ -14,12 +14,13 @@ namespace Scandiweb\BackgroundTask\Model\Api\Data;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface;
 use Magento\Framework\DataObject;
 
+/**
+ * {@inheritdoc}
+ */
 class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActionLinkInterface
 {
     /**
-     * Task action text getter
-     *
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getText(): ?string
     {
@@ -27,9 +28,7 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     }
 
     /**
-     * @param string|null $text
-     *
-     * @return BackgroundTaskActionLinkInterface
+     * {@inheritdoc}
      */
     public function setText(?string $text): BackgroundTaskActionLinkInterface
     {
@@ -39,7 +38,7 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getRoutePath(): ?string
     {
@@ -47,9 +46,7 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     }
 
     /**
-     * @param string|null $routePath
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setRoutePath(?string $routePath): BackgroundTaskActionLinkInterface
     {
@@ -59,7 +56,7 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     }
 
     /**
-     * @return array|null
+     * {@inheritdoc}
      */
     public function getRouteParams(): ?array
     {
@@ -67,9 +64,7 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     }
 
     /**
-     * @param array|null $params
-     *
-     * @return $this
+     * {@inheritdoc}
      */
     public function setRouteParams(?array $params): BackgroundTaskActionLinkInterface
     {

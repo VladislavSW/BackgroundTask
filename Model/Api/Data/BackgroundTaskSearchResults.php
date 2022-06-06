@@ -14,6 +14,9 @@ namespace Scandiweb\BackgroundTask\Model\Api\Data;
 use Magento\Framework\Api\SearchResults;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface;
 
+/**
+ * {@inheritdoc}
+ */
 class BackgroundTaskSearchResults extends SearchResults implements BackgroundTaskSearchResultsInterface
 {
 }

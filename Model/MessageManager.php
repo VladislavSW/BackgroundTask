@@ -20,6 +20,12 @@ use Magento\Framework\Message\Manager;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 use Psr\Log\LoggerInterface;
 
+/**
+ * {@inheritdoc}
+ *
+ * Provides custom complex notice message.
+ * See Scandiweb_BackgroundTask::messages/backgroundTaskNotice.phtml
+ */
 class MessageManager extends Manager
 {
     /**
@@ -60,6 +66,8 @@ class MessageManager extends Manager
     }
 
     /**
+     * Add customized notice message
+     *
      * @param mixed $taskId
      * @param string $additionalMessage
      *

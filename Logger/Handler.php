@@ -14,6 +14,9 @@ namespace Scandiweb\BackgroundTask\Logger;
 use Magento\Framework\Logger\Handler\Base;
 use Monolog\Logger;
 
+/**
+ * {@inheritdoc}
+ */
 class Handler extends Base
 {
     /**

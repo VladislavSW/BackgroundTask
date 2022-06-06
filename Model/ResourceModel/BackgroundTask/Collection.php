@@ -15,6 +15,9 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Scandiweb\BackgroundTask\Model\BackgroundTask;
 use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask as BackgroundTaskResource;
 
+/**
+ * {@inheritdoc}
+ */
 class Collection extends AbstractCollection
 {
     /**

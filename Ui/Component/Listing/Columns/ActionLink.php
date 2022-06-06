@@ -42,7 +42,7 @@ class ActionLink extends Column
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function prepareDataSource(array $dataSource)
     {

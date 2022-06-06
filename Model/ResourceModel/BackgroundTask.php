@@ -13,6 +13,9 @@ namespace Scandiweb\BackgroundTask\Model\ResourceModel;
 
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 
+/**
+ * {@inheritdoc}
+ */
 class BackgroundTask extends AbstractDb
 {
     /**

@@ -21,6 +21,9 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Data\Collection\AbstractDb;
 
+/**
+ * {@inheritdoc}
+ */
 class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
 {
     /**
@@ -57,7 +60,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getName(): string
     {
@@ -65,9 +68,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string $name
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setName(string $name): BackgroundTaskInterface
     {
@@ -77,7 +78,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string
+     * {@inheritdoc}
      */
     public function getHandler(): string
     {
@@ -85,9 +86,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string $handler
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setHandler(string $handler): BackgroundTaskInterface
     {
@@ -97,7 +96,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getArgs()
     {
@@ -112,9 +111,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param $args
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setArgs($args): BackgroundTaskInterface
     {
@@ -134,7 +131,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getStatus(): ?string
     {
@@ -142,9 +139,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string|null $status
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setStatus(?string $status): BackgroundTaskInterface
     {
@@ -154,9 +149,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string $message
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function addMessage(string $message): BackgroundTaskInterface
     {
@@ -170,7 +163,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getMessages(): ?string
     {
@@ -178,9 +171,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string[]|null $messages
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setMessages(?array $messages): BackgroundTaskInterface
     {
@@ -194,7 +185,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getCreatedAt(): ?string
     {
@@ -202,9 +193,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string|null $createdAt
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setCreatedAt(?string $createdAt): BackgroundTaskInterface
     {
@@ -214,7 +203,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getExecutedAt(): ?string
     {
@@ -222,9 +211,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string|null $executedAt
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setExecutedAt(?string $executedAt): BackgroundTaskInterface
     {
@@ -234,7 +221,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getFinishedAt(): ?string
     {
@@ -242,9 +229,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param string|null $finishedAt
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setFinishedAt(?string $finishedAt): BackgroundTaskInterface
     {
@@ -254,7 +239,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @return BackgroundTaskActionLinkInterface
+     * {@inheritdoc}
      */
     public function getActionLink(): BackgroundTaskActionLinkInterface
     {
@@ -279,9 +264,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     }
 
     /**
-     * @param BackgroundTaskActionLinkInterface|null $actionLink
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function setActionLink(?BackgroundTaskActionLinkInterface $actionLink): BackgroundTaskInterface
     {

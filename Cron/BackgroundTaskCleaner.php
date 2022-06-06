@@ -16,8 +16,16 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
 
+/**
+ * Background task cleaner class.
+ * Cleans the database from old background tasks.
+ * Cleaning frequency is based on the THRESHOLD.
+ */
 class BackgroundTaskCleaner
 {
+    /**
+     * Cleaning threshold in days
+     */
     private const THRESHOLD = 30;
 
     /**

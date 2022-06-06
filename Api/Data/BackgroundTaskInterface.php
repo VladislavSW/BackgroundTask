@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace Scandiweb\BackgroundTask\Api\Data;
 
+/**
+ * Background task interface.
+ * Provides data about background task.
+ */
 interface BackgroundTaskInterface
 {
     /**

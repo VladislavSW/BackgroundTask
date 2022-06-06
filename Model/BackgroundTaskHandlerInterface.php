@@ -13,6 +13,9 @@ namespace Scandiweb\BackgroundTask\Model;
 
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 
+/**
+ * Background task handler interface.
+ */
 interface BackgroundTaskHandlerInterface
 {
     /**

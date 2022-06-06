@@ -24,6 +24,9 @@ use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask as BackgroundTas
 use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask\CollectionFactory;
 use Magento\Framework\Exception\AlreadyExistsException;
 
+/**
+ * {@inheritdoc}
+ */
 class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
 {
     /**
@@ -81,9 +84,8 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
     }
 
     /**
-     * @param BackgroundTaskInterface $task
+     * {@inheritdoc}
      *
-     * @return void
      * @throws AlreadyExistsException
      */
     public function save(BackgroundTaskInterface $task): void
@@ -103,9 +105,8 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
     }
 
     /**
-     * @param BackgroundTaskInterface $task
+     * {@inheritdoc}
      *
-     * @return void
      * @throws Exception
      */
     public function delete(BackgroundTaskInterface $task): void
@@ -115,9 +116,7 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
     }
 
     /**
-     * @param SearchCriteriaInterface $searchCriteria
-     *
-     * @return BackgroundTaskSearchResultsInterface
+     * {@inheritdoc}
      */
     public function getList(SearchCriteriaInterface $searchCriteria): BackgroundTaskSearchResultsInterface
     {
@@ -132,9 +131,7 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
     }
 
     /**
-     * @param string $status
-     *
-     * @return BackgroundTaskSearchResultsInterface
+     * {@inheritdoc}
      */
     public function getListByStatus(string $status): BackgroundTaskSearchResultsInterface
     {
@@ -153,9 +150,7 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
     }
 
     /**
-     * @param int $id
-     *
-     * @return BackgroundTaskInterface
+     * {@inheritdoc}
      */
     public function getById(int $id): BackgroundTaskInterface
     {

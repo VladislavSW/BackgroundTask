@@ -13,6 +13,9 @@ namespace Scandiweb\BackgroundTask\Api\Data;
 
 use Magento\Framework\Api\SearchResultsInterface;
 
+/**
+ * Background task search results interface
+ */
 interface BackgroundTaskSearchResultsInterface extends SearchResultsInterface
 {
     /**

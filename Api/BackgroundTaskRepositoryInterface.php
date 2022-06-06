@@ -15,6 +15,12 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface;
 
+/**
+ * Background task repository interface.
+ * Provides CRUD operations.
+ *
+ * @api
+ */
 interface BackgroundTaskRepositoryInterface
 {
     /**

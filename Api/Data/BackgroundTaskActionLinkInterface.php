@@ -11,6 +11,10 @@ declare(strict_types=1);
 
 namespace Scandiweb\BackgroundTask\Api\Data;
 
+/**
+ * Background task action link interface.
+ * Used for action links that will be generated in the admin grid.
+ */
 interface BackgroundTaskActionLinkInterface
 {
     /**
