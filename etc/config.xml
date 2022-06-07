@@ -11,10 +11,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <background_task>
-            <cleaner>
-                <frequency>30</frequency>
-            </cleaner>
-        </background_task>
+        <system>
+            <background_task>
+                <disabled>0</disabled>
+                <cleaning_frequency>30</cleaning_frequency>
+            </background_task>
+        </system>
     </default>
 </config>

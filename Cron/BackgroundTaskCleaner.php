@@ -17,6 +17,7 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
+use Scandiweb\BackgroundTask\Model\BackgroundTask;
 
 /**
  * Background task cleaner class.
@@ -25,11 +26,6 @@ use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
  */
 class BackgroundTaskCleaner
 {
-    /**
-     * Cleaning frequency XML configuration path
-     */
-    private const CLEANER_FREQUENCY_CONFIG_PATH = 'background_task/cleaner/frequency';
-
     /**
      * @var BackgroundTaskRepositoryFactory
      */
@@ -76,16 +72,23 @@ class BackgroundTaskCleaner
      */
     public function execute(): void
     {
-        $frequencyInSeconds = $this->getCleaningFrequency();
-        $cleanFromDate = date('Y-m-d H:i:s', $this->dateTime->gmtTimestamp() - $frequencyInSeconds);
-        $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter('created_at', $cleanFromDate, 'lteq')
-            ->create();
-        $backgroundTaskRepository = $this->backgroundTaskRepositoryFactory->create();
-        $tasks = $backgroundTaskRepository->getList($searchCriteria)->getItems();
+        $isDisabled = $this->scopeConfig->getValue(
+            BackgroundTask::IS_DISABLED_CONFIG_PATH,
+            ScopeInterface::SCOPE_STORE
+        );
 
-        foreach ($tasks as $task) {
-            $backgroundTaskRepository->delete($task);
+        if (!$isDisabled) {
+            $frequencyInSeconds = $this->getCleaningFrequency();
+            $cleanFromDate = date('Y-m-d H:i:s', $this->dateTime->gmtTimestamp() - $frequencyInSeconds);
+            $searchCriteria = $this->searchCriteriaBuilder
+                ->addFilter('created_at', $cleanFromDate, 'lteq')
+                ->create();
+            $backgroundTaskRepository = $this->backgroundTaskRepositoryFactory->create();
+            $tasks = $backgroundTaskRepository->getList($searchCriteria)->getItems();
+
+            foreach ($tasks as $task) {
+                $backgroundTaskRepository->delete($task);
+            }
         }
     }
 
@@ -97,7 +100,7 @@ class BackgroundTaskCleaner
     private function getCleaningFrequency(): int
     {
         $frequencyInDays = $this->scopeConfig->getValue(
-            self::CLEANER_FREQUENCY_CONFIG_PATH,
+            BackgroundTask::CLEANING_FREQUENCY_CONFIG_PATH,
             ScopeInterface::SCOPE_STORE
         );
 

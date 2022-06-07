@@ -13,6 +13,7 @@ namespace Scandiweb\BackgroundTask\Model\Api;
 
 use Exception;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
 use Scandiweb\BackgroundTask\Api\BackgroundTaskRepositoryInterface;
@@ -60,12 +61,18 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
     protected $searchCriteriaBuilder;
 
     /**
+     * @var SortOrderBuilder
+     */
+    protected $sortOrderBuilder;
+
+    /**
      * @param BackgroundTaskResource $backgroundTaskResource
      * @param BackgroundTaskFactory $backgroundTaskFactory
      * @param CollectionFactory $collectionFactory
      * @param CollectionProcessorInterface $collectionProcessor
      * @param BackgroundTaskSearchResultsInterfaceFactory $searchResultsFactory
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param SortOrderBuilder $sortOrderBuilder
      */
     public function __construct(
         BackgroundTaskResource $backgroundTaskResource,
@@ -73,7 +80,8 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
         CollectionFactory $collectionFactory,
         CollectionProcessorInterface $collectionProcessor,
         BackgroundTaskSearchResultsInterfaceFactory $searchResultsFactory,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        SortOrderBuilder $sortOrderBuilder
     ) {
         $this->backgroundTaskResource = $backgroundTaskResource;
         $this->backgroundTaskFactory = $backgroundTaskFactory;
@@ -81,6 +89,7 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
         $this->collectionProcessor = $collectionProcessor;
         $this->searchResultsFactory = $searchResultsFactory;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->sortOrderBuilder = $sortOrderBuilder;
     }
 
     /**
@@ -135,8 +144,13 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
      */
     public function getListByStatus(string $status): BackgroundTaskSearchResultsInterface
     {
+        $sortOrder = $this->sortOrderBuilder
+            ->setField('created_at')
+            ->setDirection('ASC')
+            ->create();
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter('status', $status)
+            ->setSortOrders([$sortOrder])
             ->create();
 
         $collection = $this->collectionFactory->create();

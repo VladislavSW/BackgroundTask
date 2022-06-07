@@ -13,12 +13,15 @@ namespace Scandiweb\BackgroundTask\Cron;
 
 use Exception;
 use Psr\Log\LoggerInterface;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 use Scandiweb\BackgroundTask\Model\BackgroundTaskHandlerInterface;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
+use Scandiweb\BackgroundTask\Model\BackgroundTask;
 
 /**
  * Background task runner class.
@@ -47,21 +50,29 @@ class BackgroundTaskRunner
     protected $backgroundTaskRepositoryFactory;
 
     /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * @param LoggerInterface $logger
      * @param ObjectManagerInterface $objectManager
      * @param DateTime $dateTime
      * @param BackgroundTaskRepositoryFactory $backgroundTaskRepositoryFactory
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         LoggerInterface $logger,
         ObjectManagerInterface $objectManager,
         DateTime $dateTime,
-        BackgroundTaskRepositoryFactory $backgroundTaskRepositoryFactory
+        BackgroundTaskRepositoryFactory $backgroundTaskRepositoryFactory,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->logger = $logger;
         $this->objectManager = $objectManager;
         $this->dateTime = $dateTime;
         $this->backgroundTaskRepositoryFactory = $backgroundTaskRepositoryFactory;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -72,23 +83,30 @@ class BackgroundTaskRunner
      */
     public function execute(): void
     {
-        $taskList = $this->backgroundTaskRepositoryFactory
-            ->create()
-            ->getListByStatus(BackgroundTaskInterface::STATUS_PENDING)
-            ->getItems();
+        $isDisabled = $this->scopeConfig->getValue(
+            BackgroundTask::IS_DISABLED_CONFIG_PATH,
+            ScopeInterface::SCOPE_STORE
+        );
 
-        if (count($taskList)) {
-            $task = reset($taskList);
+        if (!$isDisabled) {
+            $taskList = $this->backgroundTaskRepositoryFactory
+                ->create()
+                ->getListByStatus(BackgroundTaskInterface::STATUS_PENDING)
+                ->getItems();
 
-            try {
-                $this->run($task);
+            if (count($taskList)) {
+                $task = reset($taskList);
 
-                if ($task->getStatus() === BackgroundTaskInterface::STATUS_ERROR) {
+                try {
+                    $this->run($task);
+
+                    if ($task->getStatus() === BackgroundTaskInterface::STATUS_ERROR) {
+                        $this->error($task);
+                    }
+                } catch (Exception $e) {
+                    $task->addMessage($e->getMessage());
                     $this->error($task);
                 }
-            } catch (Exception $e) {
-                $task->addMessage($e->getMessage());
-                $this->error($task);
             }
         }
     }
