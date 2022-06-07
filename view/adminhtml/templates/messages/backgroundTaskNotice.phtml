@@ -7,11 +7,12 @@
  * @author   Vladislavs Piscikovs <vladislavs@scandiweb.com | info@scandiweb.com>
  */
 
-/* @var $block Magento\Framework\View\Element\Message\Renderer\BlockRenderer\Template */
+/** @var $block Magento\Framework\View\Element\Message\Renderer\BlockRenderer\Template */
+/** @var $escaper Magento\Framework\Escaper */
 
 $taskId = $block->escapeUrl($block->getData('task_id'));
-$backgroundTaskListUrl = $block->escapeUrl($block->getData('background_task_list_url'));
-$additionalMessage = $block->escapeHtml($block->getData('additional_message'));
+$backgroundTaskListUrl = $escaper->escapeHtml($block->getData('background_task_list_url'));
+$additionalMessage = $escaper->escapeHtml($block->getData('additional_message'));
 $additionalMessage = $additionalMessage ? $additionalMessage . '<br/>' : $additionalMessage;
 $message = __(
     $additionalMessage
