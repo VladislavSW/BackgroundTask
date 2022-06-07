@@ -12,16 +12,14 @@
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <section id="system">
-            <group id="background_task" translate="label" type="text" sortOrder="100" showInDefault="1"
-                   showInWebsite="1" showInStore="1">
+            <group id="background_task" translate="label" type="text" sortOrder="10000" showInDefault="1">
                 <label>Background Tasks Settings</label>
-                <field id="disable" translate="label" type="select" sortOrder="10" showInDefault="1"
-                       showInWebsite="1" showInStore="1" canRestore="1">
+                <field id="disable" translate="label" type="select" sortOrder="10" showInDefault="1" canRestore="1">
                     <label>Disable Background Tasks</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
                 <field id="cleaning_frequency" translate="label comment" type="text" sortOrder="20"
-                       showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                       showInDefault="1" canRestore="1">
                     <label>Cleaning Frequency</label>
                     <comment>Tasks older than the input value in days will be cleaned.</comment>
                 </field>

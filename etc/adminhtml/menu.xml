@@ -16,7 +16,7 @@
             title="Background Tasks"
             translate="title"
             module="Scandiweb_BackgroundTask"
-            sortOrder="100"
+            sortOrder="1000"
             parent="Magento_Backend::system"
             resource="Scandiweb_BackgroundTask::tasks"
         />
@@ -27,6 +27,15 @@
             sortOrder="10"
             resource="Scandiweb_BackgroundTask::tasks_view"
             action="scandiweb_backgroundtask/tasks/view"
+            parent="Scandiweb_BackgroundTask::tasks"
+        />
+        <add
+            id="Scandiweb_BackgroundTask::settings"
+            title="Settings"
+            module="Scandiweb_BackgroundTask"
+            sortOrder="20"
+            resource="Scandiweb_BackgroundTask::settings"
+            action="adminhtml/system_config/edit/section/system/background_task"
             parent="Scandiweb_BackgroundTask::tasks"
         />
     </menu>
