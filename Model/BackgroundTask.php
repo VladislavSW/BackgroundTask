@@ -34,7 +34,7 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     /**
      * Is background tasks disabled XML config path
      */
-    public const IS_DISABLED_CONFIG_PATH = 'system/background_task/disabled';
+    public const IS_DISABLED_CONFIG_PATH = 'system/background_task/is_disabled';
 
     /**
      * @var BackgroundTaskActionLinkFactory
