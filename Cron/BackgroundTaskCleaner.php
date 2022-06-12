@@ -12,7 +12,6 @@ declare(strict_types=1);
 namespace Scandiweb\BackgroundTask\Cron;
 
 use Exception;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
@@ -72,10 +71,7 @@ class BackgroundTaskCleaner
      */
     public function execute(): void
     {
-        $isDisabled = $this->scopeConfig->getValue(
-            BackgroundTask::IS_DISABLED_CONFIG_PATH,
-            ScopeInterface::SCOPE_STORE
-        );
+        $isDisabled = $this->scopeConfig->getValue(BackgroundTask::IS_DISABLED_CONFIG_PATH);
 
         if (!$isDisabled) {
             $frequencyInSeconds = $this->getCleaningFrequency();
@@ -99,10 +95,7 @@ class BackgroundTaskCleaner
      */
     private function getCleaningFrequency(): int
     {
-        $frequencyInDays = $this->scopeConfig->getValue(
-            BackgroundTask::CLEANING_FREQUENCY_CONFIG_PATH,
-            ScopeInterface::SCOPE_STORE
-        );
+        $frequencyInDays = $this->scopeConfig->getValue(BackgroundTask::CLEANING_FREQUENCY_CONFIG_PATH);
 
         return 3600 * 24 * (int)$frequencyInDays;
     }

@@ -13,7 +13,6 @@ namespace Scandiweb\BackgroundTask\Cron;
 
 use Exception;
 use Psr\Log\LoggerInterface;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
@@ -83,10 +82,7 @@ class BackgroundTaskRunner
      */
     public function execute(): void
     {
-        $isDisabled = $this->scopeConfig->getValue(
-            BackgroundTask::IS_DISABLED_CONFIG_PATH,
-            ScopeInterface::SCOPE_STORE
-        );
+        $isDisabled = $this->scopeConfig->getValue(BackgroundTask::IS_DISABLED_CONFIG_PATH);
 
         if (!$isDisabled) {
             $taskList = $this->backgroundTaskRepositoryFactory
