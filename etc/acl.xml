@@ -13,14 +13,16 @@
     <acl>
         <resources>
             <resource id="Magento_Backend::admin">
-                <resource id="Scandiweb_BackgroundTask::tasks"
-                          title="Background Tasks" translate="title" sortOrder="10">
-                    <resource id="Scandiweb_BackgroundTask::tasks_view"
-                              title="View Tasks" translate="title" sortOrder="10"/>
-                    <resource id="Scandiweb_BackgroundTask::api"
-                              title="Background Task API" translate="title" sortOrder="20">
-                        <resource id="Scandiweb_BackgroundTask::api_save_task"
-                                  title="Save Background Task API" translate="title" sortOrder="10"/>
+                <resource id="Magento_Backend::system">
+                    <resource id="Scandiweb_BackgroundTask::tasks"
+                              title="Background Tasks" translate="title" sortOrder="10">
+                        <resource id="Scandiweb_BackgroundTask::tasks_view"
+                                  title="View Tasks" translate="title" sortOrder="10"/>
+                        <resource id="Scandiweb_BackgroundTask::api"
+                                  title="Background Task API" translate="title" sortOrder="20">
+                            <resource id="Scandiweb_BackgroundTask::api_save_task"
+                                      title="Save Background Task API" translate="title" sortOrder="10"/>
+                        </resource>
                     </resource>
                 </resource>
             </resource>
