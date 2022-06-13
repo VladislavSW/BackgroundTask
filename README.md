@@ -26,7 +26,7 @@ All tasks can be viewed in the admin panel `Admin->Scandiweb->Background Tasks->
 from the `scandiweb_background_task` database table. The cron job logic will create an object from the `handler`
 value and will run the `execute` method passing the `task` as an argument. 
 
-The `handler` class must implement `Model\BackgroundTaskHandlerInterface`, otherwise, an exception
+The `handler` class must implement `Model\Handler\BackgroundTaskHandlerInterface`, otherwise, an exception
 will be thrown. 
 
 In case if an action link should be used to download some file for example, use `Api\Data\BackgroundTaskActionLinkInterface`
@@ -76,7 +76,7 @@ The threshold is hardcoded and is set to 30 days, meaning that records older tha
 
 use Scandiweb\Sales\Model\BackgroundTask\SetMassDeliveredHandler;
 use Scandiweb\Sales\Model\BackgroundTask\SetMassDeliveredHandlerFactory;
-use Scandiweb\BackgroundTask\Model\BackgroundTaskFactory;
+use Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTaskFactory;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
 
 ...
@@ -132,8 +132,7 @@ public function massAction(AbstractCollection $collection)
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Message\ManagerInterface;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
-use Scandiweb\BackgroundTask\Model\BackgroundTaskHandlerInterface;
-use Scandiweb\Migration\Setup\Patch\Data\AddOrderStatuses;
+use Scandiweb\BackgroundTask\Model\Handler\BackgroundTaskHandlerInterface;
 use Scandiweb\Sales\Helper\OrderStatusUpdate;
 
 class SetMassDeliveredHandler implements BackgroundTaskHandlerInterface

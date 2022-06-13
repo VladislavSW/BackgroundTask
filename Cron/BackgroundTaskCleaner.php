@@ -16,7 +16,7 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
-use Scandiweb\BackgroundTask\Model\BackgroundTask;
+use Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTask;
 
 /**
  * Background task cleaner class.

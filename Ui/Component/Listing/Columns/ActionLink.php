@@ -16,6 +16,9 @@ use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 
+/**
+ * ActionLink column data source class
+ */
 class ActionLink extends Column
 {
     /**
@@ -54,11 +57,11 @@ class ActionLink extends Column
                     $url = '';
                     $actionLink = json_decode($item[$this->getData('name')], true);
 
-                    if (isset($actionLink['route_path'], $actionLink['route_params'])) {
-                        $url = $this->url->getUrl(
-                            $actionLink['route_path'],
-                            $actionLink['route_params']
-                        );
+                    if (!empty($actionLink['route_path'])) {
+                        $routeParams = !empty($actionLink['route_params'])
+                            ? json_decode($actionLink['route_params'], true)
+                            : [];
+                        $url = $this->url->getUrl($actionLink['route_path'], $routeParams);
                     }
 
                     $actionLink['url'] = $url;

@@ -16,14 +16,14 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Api\SortOrderBuilder;
 use Magento\Framework\Api\SearchCriteriaInterface;
 use Magento\Framework\Api\SearchCriteria\CollectionProcessorInterface;
+use Magento\Framework\Exception\AlreadyExistsException;
 use Scandiweb\BackgroundTask\Api\BackgroundTaskRepositoryInterface;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface;
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterfaceFactory;
-use Scandiweb\BackgroundTask\Model\BackgroundTaskFactory;
+use Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTaskFactory;
 use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask as BackgroundTaskResource;
 use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask\CollectionFactory;
-use Magento\Framework\Exception\AlreadyExistsException;
 
 /**
  * {@inheritdoc}
@@ -103,11 +103,6 @@ class BackgroundTaskRepository implements BackgroundTaskRepositoryInterface
             ->setName($task->getName())
             ->setHandler($task->getHandler())
             ->setArgs($task->getArgs())
-            ->setStatus($task->getStatus())
-            ->setMessages([$task->getMessages()])
-            ->setCreatedAt($task->getCreatedAt())
-            ->setExecutedAt($task->getExecutedAt())
-            ->setFinishedAt($task->getFinishedAt())
             ->setActionLink($task->getActionLink());
 
         $this->backgroundTaskResource->save($task);

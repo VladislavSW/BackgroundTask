@@ -17,10 +17,9 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Framework\Exception\AlreadyExistsException;
-use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
-use Scandiweb\BackgroundTask\Model\BackgroundTaskHandlerInterface;
+use Scandiweb\BackgroundTask\Model\Handler\BackgroundTaskHandlerInterface;
 use Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepositoryFactory;
-use Scandiweb\BackgroundTask\Model\BackgroundTask;
+use Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTask;
 
 /**
  * Background task runner class.
@@ -87,7 +86,7 @@ class BackgroundTaskRunner
         if (!$isDisabled) {
             $taskList = $this->backgroundTaskRepositoryFactory
                 ->create()
-                ->getListByStatus(BackgroundTaskInterface::STATUS_PENDING)
+                ->getListByStatus(BackgroundTask::STATUS_PENDING)
                 ->getItems();
 
             if (count($taskList)) {
@@ -96,7 +95,7 @@ class BackgroundTaskRunner
                 try {
                     $this->run($task);
 
-                    if ($task->getStatus() === BackgroundTaskInterface::STATUS_ERROR) {
+                    if ($task->getStatus() === BackgroundTask::STATUS_ERROR) {
                         $this->error($task);
                     }
                 } catch (Exception $e) {
@@ -110,12 +109,12 @@ class BackgroundTaskRunner
     /**
      * Run task
      *
-     * @param BackgroundTaskInterface $task
+     * @param BackgroundTask $task
      *
      * @return void
      * @throws AlreadyExistsException
      */
-    private function run(BackgroundTaskInterface $task): void
+    private function run(BackgroundTask $task): void
     {
         $handler = $this->objectManager->create($task->getHandler());
 
@@ -126,7 +125,7 @@ class BackgroundTaskRunner
             $task->addMessage("Job handler {$handlerClass} must be an instance of {$instanceClass}");
             $this->error($task);
         } else {
-            $task->setStatus(BackgroundTaskInterface::STATUS_RUNNING)
+            $task->setStatus(BackgroundTask::STATUS_RUNNING)
                 ->setExecutedAt($this->getCurrentDateTime());
 
             $this->saveTask($task);
@@ -138,16 +137,16 @@ class BackgroundTaskRunner
     /**
      * Error task handler
      *
-     * @param BackgroundTaskInterface $task
+     * @param BackgroundTask $task
      *
      * @return void
      * @throws AlreadyExistsException
      */
-    private function error(BackgroundTaskInterface $task): void
+    private function error(BackgroundTask $task): void
     {
-        $this->logger->error($task->getMessage());
+        $this->logger->error($task->getMessages());
 
-        $task->setStatus(BackgroundTaskInterface::STATUS_ERROR)
+        $task->setStatus(BackgroundTask::STATUS_ERROR)
             ->setFinishedAt($this->getCurrentDateTime());
 
         $this->saveTask($task);
@@ -156,14 +155,14 @@ class BackgroundTaskRunner
     /**
      * Success task handler
      *
-     * @param BackgroundTaskInterface $task
+     * @param BackgroundTask $task
      *
      * @return void
      * @throws AlreadyExistsException
      */
-    private function success(BackgroundTaskInterface $task): void
+    private function success(BackgroundTask $task): void
     {
-        $task->setStatus(BackgroundTaskInterface::STATUS_SUCCESS)
+        $task->setStatus(BackgroundTask::STATUS_SUCCESS)
             ->setFinishedAt($this->getCurrentDateTime());
 
         $this->saveTask($task);
@@ -172,12 +171,12 @@ class BackgroundTaskRunner
     /**
      * Save task
      *
-     * @param BackgroundTaskInterface $task
+     * @param BackgroundTask $task
      *
      * @return void
      * @throws AlreadyExistsException
      */
-    private function saveTask(BackgroundTaskInterface $task): void
+    private function saveTask(BackgroundTask $task): void
     {
         $backgroundTaskRepository = $this->backgroundTaskRepositoryFactory->create();
         $backgroundTaskRepository->save($task);

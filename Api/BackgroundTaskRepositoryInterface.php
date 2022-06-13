@@ -46,7 +46,7 @@ interface BackgroundTaskRepositoryInterface
      *
      * @param SearchCriteriaInterface $searchCriteria
      *
-     * @return BackgroundTaskSearchResultsInterface
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface
      */
     public function getList(SearchCriteriaInterface $searchCriteria): BackgroundTaskSearchResultsInterface;
 
@@ -55,7 +55,7 @@ interface BackgroundTaskRepositoryInterface
      *
      * @param string $status
      *
-     * @return BackgroundTaskSearchResultsInterface
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface
      */
     public function getListByStatus(string $status): BackgroundTaskSearchResultsInterface;
 
@@ -64,7 +64,7 @@ interface BackgroundTaskRepositoryInterface
      *
      * @param int $id
      *
-     * @return BackgroundTaskInterface
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface
      */
     public function getById(int $id): BackgroundTaskInterface;
 }

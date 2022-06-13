@@ -9,17 +9,16 @@
 
 declare(strict_types=1);
 
-namespace Scandiweb\BackgroundTask\Model;
+namespace Scandiweb\BackgroundTask\Model\Api\Data;
 
-use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
-use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface;
-use Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTaskActionLinkFactory;
-use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask as BackgroundTaskResource;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Registry;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Data\Collection\AbstractDb;
+use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
+use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface;
+use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask as BackgroundTaskResource;
 
 /**
  * {@inheritdoc}
@@ -108,13 +107,13 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
     /**
      * {@inheritdoc}
      */
-    public function getArgs()
+    public function getArgs(): array
     {
-        $args = $this->getData('args') ?? '';
+        $args = $this->getData('args') ?? '{}';
         $result = json_decode($args, true);
 
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            $result = $args;
+        if (!is_array($result)) {
+            $result = [];
         }
 
         return $result;
@@ -136,114 +135,6 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
         } else {
             $this->setData('args', json_encode($args));
         }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getStatus(): ?string
-    {
-        return $this->getData('status');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setStatus(?string $status): BackgroundTaskInterface
-    {
-        $this->setData('status', $status);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addMessage(string $message): BackgroundTaskInterface
-    {
-        if ($this->getMessages()) {
-            $this->setMessages([$this->getMessages(), $message]);
-        } else {
-            $this->setMessages([$message]);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getMessages(): ?string
-    {
-        return $this->getData('messages');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setMessages(?array $messages): BackgroundTaskInterface
-    {
-        if ($messages === null) {
-            $this->unsetData('messages');
-        } else {
-            $this->setData('messages', implode(' | ', $messages));
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCreatedAt(): ?string
-    {
-        return $this->getData('created_at');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setCreatedAt(?string $createdAt): BackgroundTaskInterface
-    {
-        $this->setData('created_at', $createdAt);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getExecutedAt(): ?string
-    {
-        return $this->getData('executed_at');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setExecutedAt(?string $executedAt): BackgroundTaskInterface
-    {
-        $this->setData('executed_at', $executedAt);
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getFinishedAt(): ?string
-    {
-        return $this->getData('finished_at');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setFinishedAt(?string $finishedAt): BackgroundTaskInterface
-    {
-        $this->setData('finished_at', $finishedAt);
 
         return $this;
     }
@@ -285,6 +176,42 @@ class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
             'route_path' => $actionLink->getRoutePath(),
             'route_params' => $actionLink->getRouteParams()
         ]));
+
+        return $this;
+    }
+
+    /**
+     * Add message to the messages list
+     *
+     * @param string $message
+     *
+     * @return $this
+     */
+    public function addMessage(string $message): BackgroundTask
+    {
+        if ($this->getMessages()) {
+            $this->setMessages([$this->getMessages(), $message]);
+        } else {
+            $this->setMessages([$message]);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Set messages list
+     *
+     * @param array|null $messages
+     *
+     * @return $this
+     */
+    public function setMessages(?array $messages): BackgroundTask
+    {
+        if ($messages === null) {
+            $this->unsetData('messages');
+        } else {
+            $this->setData('messages', implode(' | ', $messages));
+        }
 
         return $this;
     }

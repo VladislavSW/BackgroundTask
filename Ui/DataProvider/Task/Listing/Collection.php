@@ -13,6 +13,9 @@ namespace Scandiweb\BackgroundTask\Ui\DataProvider\Task\Listing;
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
 
+/**
+ * {@inheritdoc}
+ */
 class Collection extends SearchResult
 {
     /**

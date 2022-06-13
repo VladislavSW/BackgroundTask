@@ -13,6 +13,9 @@ namespace Scandiweb\BackgroundTask\Ui\DataProvider\Task;
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider;
 
+/**
+ * {@inheritdoc}
+ */
 class ListingDataProvider extends DataProvider
 {
 }

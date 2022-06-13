@@ -29,6 +29,10 @@
                 type="Scandiweb\BackgroundTask\Model\Api\BackgroundTaskRepository"/>
     <preference for="Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface"
                 type="Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTaskSearchResults"/>
+    <preference for="Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface"
+                type="Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTask"/>
+    <preference for="Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface"
+                type="Scandiweb\BackgroundTask\Model\Api\Data\BackgroundTaskActionLink"/>
 
     <!-- UI -->
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">

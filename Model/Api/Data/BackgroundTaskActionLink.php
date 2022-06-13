@@ -11,8 +11,8 @@ declare(strict_types=1);
 
 namespace Scandiweb\BackgroundTask\Model\Api\Data;
 
-use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface;
 use Magento\Framework\DataObject;
+use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface;
 
 /**
  * {@inheritdoc}
@@ -22,9 +22,9 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     /**
      * {@inheritdoc}
      */
-    public function getText(): ?string
+    public function getText(): string
     {
-        return $this->getData('text');
+        return $this->getData('text') ?? '';
     }
 
     /**
@@ -40,9 +40,9 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     /**
      * {@inheritdoc}
      */
-    public function getRoutePath(): ?string
+    public function getRoutePath(): string
     {
-        return $this->getData('route_path');
+        return $this->getData('route_path') ?? '';
     }
 
     /**
@@ -58,9 +58,9 @@ class BackgroundTaskActionLink extends DataObject implements BackgroundTaskActio
     /**
      * {@inheritdoc}
      */
-    public function getRouteParams(): ?array
+    public function getRouteParams(): array
     {
-        return $this->getData('route_params');
+        return $this->getData('route_params') ?? [];
     }
 
     /**

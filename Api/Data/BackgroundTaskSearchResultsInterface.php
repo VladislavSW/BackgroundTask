@@ -21,7 +21,7 @@ interface BackgroundTaskSearchResultsInterface extends SearchResultsInterface
     /**
      * Get search result items
      *
-     * @return BackgroundTaskInterface[]
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface[]
      */
     public function getItems();
 
@@ -30,7 +30,7 @@ interface BackgroundTaskSearchResultsInterface extends SearchResultsInterface
      *
      * @param BackgroundTaskInterface[] $items
      *
-     * @return $this
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskSearchResultsInterface
      */
     public function setItems(array $items);
 }

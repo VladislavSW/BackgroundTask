@@ -14,6 +14,8 @@ namespace Scandiweb\BackgroundTask\Api\Data;
 /**
  * Background task interface.
  * Provides data about background task.
+ *
+ * @api
  */
 interface BackgroundTaskInterface
 {
@@ -26,169 +28,66 @@ interface BackgroundTaskInterface
     public const STATUS_ERROR = 'error';
 
     /**
-     * Task id getter
-     *
-     * @return int
-     */
-    public function getId();
-
-    /**
-     * Task id setter
-     *
-     * @param int $id
-     *
-     * @return $this
-     */
-    public function setId(int $id);
-
-    /**
-     * Task name getter
+     * Get task name
      *
      * @return string
      */
     public function getName(): string;
 
     /**
-     * Task name setter
+     * Set task name
      *
      * @param string $name
      *
-     * @return $this
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface
      */
     public function setName(string $name): BackgroundTaskInterface;
 
     /**
-     * Task handler getter
+     * Get task handler
      *
      * @return string
      */
     public function getHandler(): string;
 
     /**
-     * Task handler setter
+     * Set task handler
      *
      * @param string $handler
      *
-     * @return $this
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface
      */
     public function setHandler(string $handler): BackgroundTaskInterface;
 
     /**
-     * Task handler arguments getter
+     * Get task handler arguments
      *
      * @return mixed
      */
-    public function getArgs();
+    public function getArgs(): array;
 
     /**
-     * Task handler arguments setter
+     * Set task handler arguments
      *
      * @param mixed $args
      *
-     * @return $this
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface
      */
     public function setArgs($args): BackgroundTaskInterface;
 
     /**
-     * Task status getter
+     * Get task action link
      *
-     * @return string|null
-     */
-    public function getStatus(): ?string;
-
-    /**
-     * Task status setter
-     *
-     * @param string|null $status
-     *
-     * @return $this
-     */
-    public function setStatus(?string $status): BackgroundTaskInterface;
-
-    /**
-     * @param string $message
-     *
-     * @return BackgroundTaskInterface
-     */
-    public function addMessage(string $message): BackgroundTaskInterface;
-
-    /**
-     * Task execution message getter
-     *
-     * @return string|null
-     */
-    public function getMessages(): ?string;
-
-    /**
-     * Task execution message setter
-     *
-     * @param string[]|null $messages
-     *
-     * @return BackgroundTaskInterface
-     */
-    public function setMessages(?array $messages): BackgroundTaskInterface;
-
-    /**
-     * Task creation date getter
-     *
-     * @return string|null
-     */
-    public function getCreatedAt(): ?string;
-
-    /**
-     * Task creation date setter
-     *
-     * @param string|null $createdAt
-     *
-     * @return BackgroundTaskInterface
-     */
-    public function setCreatedAt(?string $createdAt): BackgroundTaskInterface;
-
-    /**
-     * Task execution date getter
-     *
-     * @return string|null
-     */
-    public function getExecutedAt(): ?string;
-
-    /**
-     * Task execution date setter
-     *
-     * @param string|null $executedAt
-     *
-     * @return BackgroundTaskInterface
-     */
-    public function setExecutedAt(?string $executedAt): BackgroundTaskInterface;
-
-    /**
-     * Finished task date getter
-     *
-     * @return string|null
-     */
-    public function getFinishedAt(): ?string;
-
-    /**
-     * Finished task date setter
-     *
-     * @param string|null $finishedAt
-     *
-     * @return BackgroundTaskInterface
-     */
-    public function setFinishedAt(?string $finishedAt): BackgroundTaskInterface;
-
-    /**
-     * Action link getter
-     *
-     * @return BackgroundTaskActionLinkInterface
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface
      */
     public function getActionLink(): BackgroundTaskActionLinkInterface;
 
     /**
-     * Action link setter
+     * Set task action link
      *
      * @param BackgroundTaskActionLinkInterface|null $actionLink
      *
-     * @return BackgroundTaskInterface
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface
      */
     public function setActionLink(?BackgroundTaskActionLinkInterface $actionLink): BackgroundTaskInterface;
 }

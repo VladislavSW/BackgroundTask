@@ -14,54 +14,56 @@ namespace Scandiweb\BackgroundTask\Api\Data;
 /**
  * Background task action link interface.
  * Used for action links that will be generated in the admin grid.
+ *
+ * @api
  */
 interface BackgroundTaskActionLinkInterface
 {
     /**
-     * Task action text getter
+     * Get task action link text
      *
-     * @return string|null
+     * @return string
      */
-    public function getText(): ?string;
+    public function getText(): string;
 
     /**
-     * Task action text setter
+     * Set task action link text
      *
      * @param string|null $text
      *
-     * @return $this
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface
      */
     public function setText(?string $text): BackgroundTaskActionLinkInterface;
 
     /**
-     * Task action link route path getter
+     * Get task action link route path
      *
-     * @return string|null
+     * @return string
      */
-    public function getRoutePath(): ?string;
+    public function getRoutePath(): string;
 
     /**
-     * Task action link route path setter
+     * Set task action link route path
      *
      * @param string|null $routePath
      *
-     * @return $this
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface
      */
     public function setRoutePath(?string $routePath): BackgroundTaskActionLinkInterface;
 
     /**
-     * Task action link route params getter
+     * Get task action link route params
      *
-     * @return array|null
+     * @return mixed
      */
-    public function getRouteParams(): ?array;
+    public function getRouteParams(): array;
 
     /**
-     * Task action link route params setter
+     * Set task action link route params
      *
      * @param array|null $params
      *
-     * @return $this
+     * @return \Scandiweb\BackgroundTask\Api\Data\BackgroundTaskActionLinkInterface
      */
     public function setRouteParams(?array $params): BackgroundTaskActionLinkInterface;
 }

@@ -9,7 +9,7 @@
 
 declare(strict_types=1);
 
-namespace Scandiweb\BackgroundTask\Model;
+namespace Scandiweb\BackgroundTask\Model\Handler;
 
 use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 
@@ -19,7 +19,7 @@ use Scandiweb\BackgroundTask\Api\Data\BackgroundTaskInterface;
 interface BackgroundTaskHandlerInterface
 {
     /**
-     * Task name getter
+     * Get task name
      *
      * @return string
      */
