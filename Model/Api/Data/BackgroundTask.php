@@ -26,16 +26,6 @@ use Scandiweb\BackgroundTask\Model\ResourceModel\BackgroundTask as BackgroundTas
 class BackgroundTask extends AbstractModel implements BackgroundTaskInterface
 {
     /**
-     * Cleaning frequency XML configuration path
-     */
-    public const CLEANING_FREQUENCY_CONFIG_PATH = 'system/background_task/cleaning_frequency';
-
-    /**
-     * Is background tasks disabled XML config path
-     */
-    public const IS_DISABLED_CONFIG_PATH = 'system/background_task/is_disabled';
-
-    /**
      * @var BackgroundTaskActionLinkFactory
      */
     protected $backgroundTaskActionLinkFactory;

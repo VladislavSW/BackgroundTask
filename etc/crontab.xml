@@ -13,27 +13,27 @@
     <group id="scandiweb_background_task">
         <job name="scandiweb_background_task_runner_1"
              instance="Scandiweb\BackgroundTask\Cron\BackgroundTaskRunner" method="execute">
-            <schedule>* * * * *</schedule>
+            <config_path>system/background_task/task_runner_cron_expression</config_path>
         </job>
         <job name="scandiweb_background_task_runner_2"
              instance="Scandiweb\BackgroundTask\Cron\BackgroundTaskRunner" method="execute">
-            <schedule>* * * * *</schedule>
+            <config_path>system/background_task/task_runner_cron_expression</config_path>
         </job>
         <job name="scandiweb_background_task_runner_3"
              instance="Scandiweb\BackgroundTask\Cron\BackgroundTaskRunner" method="execute">
-            <schedule>* * * * *</schedule>
+            <config_path>system/background_task/task_runner_cron_expression</config_path>
         </job>
         <job name="scandiweb_background_task_runner_4"
              instance="Scandiweb\BackgroundTask\Cron\BackgroundTaskRunner" method="execute">
-            <schedule>* * * * *</schedule>
+            <config_path>system/background_task/task_runner_cron_expression</config_path>
         </job>
         <job name="scandiweb_background_task_runner_5"
              instance="Scandiweb\BackgroundTask\Cron\BackgroundTaskRunner" method="execute">
-            <schedule>* * * * *</schedule>
+            <config_path>system/background_task/task_runner_cron_expression</config_path>
         </job>
         <job name="scandiweb_background_task_cleaner"
              instance="Scandiweb\BackgroundTask\Cron\BackgroundTaskCleaner" method="execute">
-            <schedule>0 2 * * *</schedule>
+            <config_path>system/background_task/task_cleaner_cron_expression</config_path>
         </job>
     </group>
 </config>

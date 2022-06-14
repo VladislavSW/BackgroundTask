@@ -28,6 +28,12 @@ interface BackgroundTaskInterface
     public const STATUS_ERROR = 'error';
 
     /**
+     * XML configuration paths
+     */
+    public const CLEANING_FREQUENCY_CONFIG_PATH = 'system/background_task/cleaning_frequency';
+    public const IS_DISABLED_CONFIG_PATH = 'system/background_task/is_disabled';
+
+    /**
      * Get task name
      *
      * @return string

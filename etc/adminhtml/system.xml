@@ -23,6 +23,16 @@
                     <label>Cleaning Frequency</label>
                     <comment>Tasks older than the input value in days will be cleaned.</comment>
                 </field>
+                <field id="task_runner_cron_expression" translate="label comment" type="text" sortOrder="30"
+                       showInDefault="1" canRestore="1">
+                    <label>Task Runner Cron Expression</label>
+                    <comment>Format: * * * * *</comment>
+                </field>
+                <field id="task_cleaner_cron_expression" translate="label comment" type="text" sortOrder="40"
+                       showInDefault="1" canRestore="1">
+                    <label>Task Cleaner Cron Expression</label>
+                    <comment>Format: * * * * *</comment>
+                </field>
             </group>
         </section>
     </system>
