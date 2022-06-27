@@ -59,7 +59,7 @@ class ActionLink extends Column
 
                     if (!empty($actionLink['route_path'])) {
                         $routeParams = !empty($actionLink['route_params'])
-                            ? json_decode($actionLink['route_params'], true)
+                            ? $actionLink['route_params']
                             : [];
                         $url = $this->url->getUrl($actionLink['route_path'], $routeParams);
                     }
